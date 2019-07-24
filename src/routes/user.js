@@ -11,7 +11,7 @@ Route
   // .get('/', userController.getUser)
   .post(`/register`, userController.registrasiUser)
   .post(`/login`, userController.loginUser)
-  .patch(`/:id_ktp`, userController.updateUser)
-  .delete(`/:id_ktp`, userController.deleteUser)
+  .patch(`/:id_ktp`, Auth.authInfo, Auth.accesstoken, userController.updateUser)
+  .delete(`/:id_ktp`, Auth.authInfo, Auth.accesstoken, userController.deleteUser)
 
 module.exports = Route

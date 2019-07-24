@@ -21,6 +21,16 @@ module.exports = {
         console.log(error)
       })
   },
+  getBorrowingByidUser: (req, res) => {
+    const id = req.params.id
+    borrowingModel.getBorrowingByidUser(id)
+      .then((resultBorrowing) => {
+        help.response(res, resultBorrowing, 200)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  },
   insertBorrowing: (req, res) => {
     const lama_pinjam = req.body.lama_pinjam
     const kadaluarsa = new Date(new Date().getTime()+(lama_pinjam*24*60*60*1000)); // 1000 ini buat pengkalian milisecondnya date object

@@ -62,6 +62,31 @@ module.exports = {
         }
       })
   },
+  logutUser: (req, res) => {
+    expiresIn: '1h'
+    // const email = req.body.email
+    // const password = req.body.password
+
+    // userModel.getByEmail(email)
+    //   .then((result) => {
+    //     const dataUser = result[0]
+    //     const usePassword = help.setPassword(password, dataUser.salt).passwordHash
+    //     console.log('ini dia', usePassword)
+
+    //     if (usePassword === dataUser.password) {
+    //       dataUser.token = jwt.sign({
+    //         id_ktp: dataUser.id_ktp
+    //       }, process.env.SECRET_KEY, { expiresIn: '1h' })
+
+    //       delete dataUser.salt
+    //       delete dataUser.password
+
+    //       return help.response(res, dataUser, 200)
+    //     } else {
+    //       return help.response(res, null, 403, 'Wrong password!')
+    //     }
+    //   })
+  },
   updateUser: (req, res) => {
     const id_ktp = req.params.id_ktp
     const data = {

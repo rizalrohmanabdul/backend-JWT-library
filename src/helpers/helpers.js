@@ -1,8 +1,8 @@
-const crypto = require("crypto");
+const crypto = require('crypto')
 
 module.exports = {
   response: (res, result, status, error) => {
-    let resultPrint = {}
+    const resultPrint = {}
 
     resultPrint.error = error || null
     resultPrint.status_code = status || 200
@@ -14,17 +14,17 @@ module.exports = {
   generateSalt: length => {
     return crypto
       .randomBytes(Math.ceil(length / 2))
-      .toString("hex")
-      .slice(0, length);
+      .toString('hex')
+      .slice(0, length)
   },
 
   setPassword: (password, salt) => {
-    const hash = crypto.createHmac("sha512", salt);
-    hash.update(password);
-    const value = hash.digest("hex");
+    const hash = crypto.createHmac('sha512', salt)
+    hash.update(password)
+    const value = hash.digest('hex')
     return {
       salt: salt,
       passwordHash: value
-    };
+    }
   }
-};
+}

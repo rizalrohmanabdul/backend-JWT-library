@@ -32,7 +32,7 @@ module.exports = {
       if (err && err.name === 'JsonWebTokenError') return MiscHelper.response(res, null, 401, 'Invalid Token')
 
       if (parseInt(userToken) !== parseInt(decoded.id_ktp)) return MiscHelper.response(res, null, 401, 'Invalid User Token')
-      console.log(decoded)
+      console.log('ini decode', decoded)
       next()
     })
   }
