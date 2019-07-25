@@ -8,9 +8,10 @@ const app = express()
 const port = process.env.SERVER_PORT || 3333
 
 const categoryRoute = require('./src/routes/category')
-const userRoute = require('./src/routes/user')
+const userRoute = require('./src/routes/borrower')
 const bookRoute     = require('./src/routes/book')
 const borrowingRoute = require('./src/routes/borrowing')
+const authuserRoute = require('./src/routes/authuser')
 
 const whitelist = process.env.WHITELIST
 
@@ -41,5 +42,6 @@ app.use(bodyParser.json()) // Body parse json
 app.use(bodyParser.urlencoded({ extended: false })) // body type
 app.use(`/book`, bookRoute)
 app.use(`/category`, categoryRoute) 
-app.use(`/user`, userRoute)
+app.use(`/borrower`, userRoute)
 app.use('/borrowing', borrowingRoute)
+app.use('/authuser', authuserRoute)

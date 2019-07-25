@@ -24,6 +24,18 @@ module.exports = {
       })
     })
   },
+  postUser: (data) => {
+    console.log(data)
+    return new Promise((resolve, reject) => {
+      conn.query('INSERT INTO tb_user SET ?', data, (err, result) => {
+        if (!err) {
+          resolve(result)
+        } else {
+          reject(new Error(err))
+        }
+      })
+    })
+  },
   getByEmail: (email) => {
     return new Promise((resolve, reject) => {
       conn.query('SELECT * FROM tb_user WHERE email = ?', email, (err, result) => {

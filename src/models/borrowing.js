@@ -15,24 +15,11 @@ module.exports = {
       );
     });
   },
-  detailBorrowing: (id) => {
+  detailBorrowing: id => {
     return new Promise((resolve, reject) => {
       conn.query(
-        "SELECT * FROM tb_peminjaman INNER JOIN tb_buku ON tb_peminjaman.id_buku = tb_buku.id_buku INNER JOIN tb_kategori ON tb_buku.id_kategori = tb_kategori.id_kategori INNER JOIN tb_user ON tb_peminjaman.id_ktp = tb_user.id_ktp WHERE tb_peminjaman.id_peminjaman =?",id,
-        (err, result) => {
-          if (!err) {
-            resolve(result);
-          } else {
-            reject(new Error(err));
-          }
-        }
-      );
-    });
-  },
-  getBorrowingByidUser: (id) => {
-    return new Promise((resolve, reject) => {
-      conn.query(
-        "SELECT * FROM tb_peminjaman INNER JOIN tb_buku ON tb_peminjaman.id_buku = tb_buku.id_buku INNER JOIN tb_kategori ON tb_buku.id_kategori = tb_kategori.id_kategori INNER JOIN tb_user ON tb_peminjaman.id_ktp = tb_user.id_ktp WHERE tb_peminjaman.id_ktp =?",id,
+        "SELECT * FROM tb_peminjaman INNER JOIN tb_buku ON tb_peminjaman.id_buku = tb_buku.id_buku INNER JOIN tb_kategori ON tb_buku.id_kategori = tb_kategori.id_kategori INNER JOIN tb_user ON tb_peminjaman.id_ktp = tb_user.id_ktp WHERE tb_peminjaman.id_peminjaman =?",
+        id,
         (err, result) => {
           if (!err) {
             resolve(result);
@@ -44,7 +31,7 @@ module.exports = {
     });
   },
   insertBorrowing: data => {
-    console.log(data)
+    console.log(data);
     const data2 = "dipinjam";
     const id_buku = data.id_buku;
     return new Promise((resolve, reject) => {
@@ -64,7 +51,6 @@ module.exports = {
     });
   },
   updateBorrowing: (id_ktp, data) => {
-    
     return new Promise((resolve, reject) => {
       conn.query(
         "UPDATE tb_peminjaman SET ? WHERE id_ktp=?",
@@ -80,7 +66,7 @@ module.exports = {
     });
   },
   retrunedBorrowing: (_id_peminjaman, data) => {
-    console.log(data)
+    console.log(data);
     const data2 = "ada";
     const id_buku = data.id_buku;
     return new Promise((resolve, reject) => {
@@ -99,6 +85,20 @@ module.exports = {
               }
             }
           );
+        }
+      );
+    });
+  },
+  getBorrowingByidUser: (id) => {
+    return new Promise((resolve, reject) => {
+      conn.query(
+        "SELECT * FROM tb_peminjaman INNER JOIN tb_buku ON tb_peminjaman.id_buku = tb_buku.id_buku INNER JOIN tb_kategori ON tb_buku.id_kategori = tb_kategori.id_kategori INNER JOIN tb_user ON tb_peminjaman.id_ktp = tb_user.id_ktp WHERE tb_peminjaman.id_ktp =?",id,
+        (err, result) => {
+          if (!err) {
+            resolve(result);
+          } else {
+            reject(new Error(err));
+          }
         }
       );
     });

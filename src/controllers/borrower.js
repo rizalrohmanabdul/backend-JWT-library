@@ -1,4 +1,4 @@
-const userModel = require('../models/user')
+const userModel = require('../models/borrower')
 const help = require('../helpers/helpers')
 
 const jwt = require('jsonwebtoken')
@@ -38,6 +38,31 @@ module.exports = {
         console.log(error)
       })
   },
+  insertUser: (req, res) => {
+    const salt = help.generateSalt(18)
+    const passwordHash = help.setPassword(req.body.password, salt)
+    const data = {
+      id_ktp: req.body.id_ktp,
+      nama_peminjam: req.body.nama_peminjam,
+      jk: req.body.jk,
+      alamat: req.body.alamat,
+      email: req.body.email,
+      password: passwordHash.passwordHash,
+      salt: passwordHash.salt,
+      token: '',
+      status: 1,
+      level_user: 'peminjam'
+    }
+
+    userModel.insertUser(data)
+      .then((resultUser) => {
+        const result = resultUser
+        help.response(res, result, 200, data)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  },
   loginUser: (req, res) => {
     const email = req.body.email
     const password = req.body.password
@@ -63,7 +88,6 @@ module.exports = {
       })
   },
   logutUser: (req, res) => {
-    expiresIn: '1h'
     // const email = req.body.email
     // const password = req.body.password
 
