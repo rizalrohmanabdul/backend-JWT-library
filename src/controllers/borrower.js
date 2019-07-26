@@ -5,11 +5,12 @@ const jwt = require('jsonwebtoken')
 
 module.exports = {
   getUser: (req, res) => {
-    userModel.getUser()
-      .then((resultUser) => {
+    userModel
+      .getUser()
+      .then(resultUser => {
         help.response(res, resultUser, 200)
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error)
       })
   },
@@ -29,12 +30,23 @@ module.exports = {
       level_user: 'peminjam'
     }
 
-    userModel.registrasiUser(data)
-      .then((resultUser) => {
+    // userModel.getByEmail(data.email)
+    //   .then(resultUser => {
+    //     const dataUser = result[0]
+    //     if (data.email === dataUser.email ) {
+    //       const result = resultUser
+    //       help.response(res, null, 403, 'no email duplicate')
+    //     } else {
+          
+    //     }
+    //   })
+    userModel
+      .registrasiUser(data)
+      .then(resultUser => {
         const result = resultUser
         help.response(res, result, 200, data)
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error)
       })
   },
@@ -54,12 +66,13 @@ module.exports = {
       level_user: 'peminjam'
     }
 
-    userModel.insertUser(data)
-      .then((resultUser) => {
+    userModel
+      .insertUser(data)
+      .then(resultUser => {
         const result = resultUser
         help.response(res, result, 200, data)
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error)
       })
   },
@@ -67,16 +80,22 @@ module.exports = {
     const email = req.body.email
     const password = req.body.password
 
-    userModel.getByEmail(email)
-      .then((result) => {
+    userModel
+      .getByEmail(email)
+      .then(result => {
         const dataUser = result[0]
-        const usePassword = help.setPassword(password, dataUser.salt).passwordHash
+        const usePassword = help.setPassword(password, dataUser.salt)
+          .passwordHash
         console.log('ini dia', usePassword)
 
         if (usePassword === dataUser.password) {
-          dataUser.token = jwt.sign({
-            id_ktp: dataUser.id_ktp
-          }, process.env.SECRET_KEY, { expiresIn: '1h' })
+          dataUser.token = jwt.sign(
+            {
+              id_ktp: dataUser.id_ktp
+            },
+            process.env.SECRET_KEY,
+            { expiresIn: '1h' }
+          )
 
           delete dataUser.salt
           delete dataUser.password
@@ -85,28 +104,25 @@ module.exports = {
         } else {
           return help.response(res, null, 403, 'Wrong email & password!')
         }
-      }).catch(() => {
+      })
+      .catch(() => {
         return help.response(res, null, 403, 'No email & password!')
       })
   },
   logutUser: (req, res) => {
     // const email = req.body.email
     // const password = req.body.password
-
     // userModel.getByEmail(email)
     //   .then((result) => {
     //     const dataUser = result[0]
     //     const usePassword = help.setPassword(password, dataUser.salt).passwordHash
     //     console.log('ini dia', usePassword)
-
     //     if (usePassword === dataUser.password) {
     //       dataUser.token = jwt.sign({
     //         id_ktp: dataUser.id_ktp
     //       }, process.env.SECRET_KEY, { expiresIn: '1h' })
-
     //       delete dataUser.salt
     //       delete dataUser.password
-
     //       return help.response(res, dataUser, 200)
     //     } else {
     //       return help.response(res, null, 403, 'Wrong password!')
@@ -120,24 +136,26 @@ module.exports = {
       nama_peminjam: req.body.nama_peminjam,
       alamat: req.body.alamat
     }
-    userModel.updateUser(id_ktp, data)
-      .then((resultUser) => {
+    userModel
+      .updateUser(id_ktp, data)
+      .then(resultUser => {
         const result = resultUser
         help.response(res, result, 200, [id_ktp, data])
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error)
       })
   },
   deleteUser: (req, res) => {
     const id_ktp = req.params.id_ktp
 
-    userModel.deleteUser(id_ktp)
-      .then((resultUser) => {
+    userModel
+      .deleteUser(id_ktp)
+      .then(resultUser => {
         const result = resultUser
         help.response(res, result, 200, id_ktp)
       })
-      .catch((error) => {
+      .catch(error => {
         console.log(error)
       })
   }
