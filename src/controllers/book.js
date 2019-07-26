@@ -22,6 +22,17 @@ module.exports = {
         console.log(error)
       })
   },
+  detailBook: (req, res) => {
+    const id = req.params.id_book
+    bookModel.detailBook(id)
+      .then((resultBook) => {
+        const result = resultBook
+        help.response(res, result, 200)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
+  },
   insertBook: (req, res) => {
     const data = {
       id_kategori: req.body.id_kategori,
