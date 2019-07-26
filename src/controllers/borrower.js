@@ -83,8 +83,10 @@ module.exports = {
 
           return help.response(res, dataUser, 200)
         } else {
-          return help.response(res, null, 403, 'Wrong password!')
+          return help.response(res, null, 403, 'Wrong email & password!')
         }
+      }).catch(() => {
+        return help.response(res, null, 403, 'No email & password!')
       })
   },
   logutUser: (req, res) => {
