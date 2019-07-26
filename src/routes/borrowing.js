@@ -2,9 +2,10 @@ const express = require('express')
 const Route = express.Router()
 
 const borrowingController = require('../controllers/borrowing')
-
+const Auth = require('../helpers/auth')
 Route
-  .get('/', borrowingController.getBorrowing)
+  .all('/*', Auth.authInfo)
+  .get('/', Auth.accesstoken, borrowingController.getBorrowing)
   .get('/details/:id', borrowingController.detailBorrowing)
   .get('/getbyiduser/:id', borrowingController.getBorrowingByidUser)
   .post(`/`, borrowingController.insertBorrowing)

@@ -2,8 +2,10 @@ const express = require('express')
 const Route = express.Router()
 
 const bookController = require('../controllers/book')
+const Auth = require('../helpers/auth')
  
 Route 
+  
   .get('/', bookController.getBook)
   .get('/active/', bookController.getBookactive)
   .get('/detail/:id_book', bookController.detailBook)
